@@ -12,7 +12,7 @@ const cors = require('./middlewares/cors');
 const DATABASE_URL_DEV = require('./utils/constants');
 const limiter = require('./middlewares/limiter');
 
-const { PORT = 3000, NODE_ENV, DATABASE_URL_PROD } = process.env;
+const { PORT = 3002, NODE_ENV, DATABASE_URL_PROD } = process.env;
 
 mongoose
   .connect(NODE_ENV === 'production' ? DATABASE_URL_PROD : DATABASE_URL_DEV, {
