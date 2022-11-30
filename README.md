@@ -34,6 +34,6 @@
 
 # Публичный IP-адрес сервера и домен, по которому к нему можно обратиться:
 
-Адрес сайта - https://movies-explorer.yandex.nomoredomains.club
+Адрес сайта - https://api.movies-explorer.ya.nomoredomains.club
 
 IP-адрес - 51.250.66.98
