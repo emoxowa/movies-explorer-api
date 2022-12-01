@@ -4,12 +4,18 @@ const User = require('../models/users');
 const NotFoundError = require('../utils/errors/not-found-err');
 const BadRequestError = require('../utils/errors/bad-request-err');
 const ConflictError = require('../utils/errors/conflict-err');
+const {
+  validationError,
+  userIdNotFound,
+  emailExists,
+  userLogout,
+} = require('../utils/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new NotFoundError('Пользователь с указанным id не найден'))
+    .orFail(new NotFoundError(userIdNotFound))
     .then((user) => {
       res.send(user);
     })
@@ -34,15 +40,11 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(
-          new BadRequestError('Ошибка валидации. Введены некорректные данные'),
-        );
+        return next(new BadRequestError(validationError));
       }
       if (err.code === 11000) {
         return next(
-          new ConflictError(
-            'Пользователь с указанным email уже зарегистрирован',
-          ),
+          new ConflictError(emailExists),
         );
       }
       return next(err);
@@ -60,19 +62,15 @@ const updateUser = (req, res, next) => {
       runValidators: true,
     },
   )
-    .orFail(new NotFoundError('Пользователь с указанным id не найден'))
+    .orFail(new NotFoundError(userIdNotFound))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(
-          new BadRequestError('Ошибка валидации. Введены некорректные данные'),
-        );
+        return next(new BadRequestError(validationError));
       }
       if (err.code === 11000) {
         return next(
-          new ConflictError(
-            'Пользователь с указанным email уже зарегистрирован',
-          ),
+          new ConflictError(emailExists),
         );
       }
       return next(err);
@@ -98,12 +96,8 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
-const logout = (req, res, next) => {
-  try {
-    res.clearCookie('authorization').send({ message: 'Выход' });
-  } catch (err) {
-    next(err);
-  }
+const logout = (req, res) => {
+  res.clearCookie('authorization').send({ message: userLogout });
 };
 
 module.exports = {
