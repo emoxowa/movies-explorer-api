@@ -5,7 +5,7 @@ const { authRequired } = require('../utils/constants');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const auth = (req, res, next) => {
-  const { authorization } = req.cookies;
+  const { authorization } = req.headers;
   if (!authorization) {
     throw new UnauthorizedError(authRequired);
   }
