@@ -2,6 +2,7 @@ const allowedCors = [
   'https://localhost:3000',
   'http://localhost:3000',
   'https://movies-explorer.yandex.nomoredomains.club',
+  'http://movies-explorer.yandex.nomoredomains.club',
 ];
 
 const cors = (req, res, next) => {
