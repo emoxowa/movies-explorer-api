@@ -23,7 +23,7 @@ mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL_PROD : DATABASE_URL_DE
   });
 
 const app = express();
-app.use(cors());
+app.use(cors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
