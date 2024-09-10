@@ -6,6 +6,7 @@ const allowedCors = [
   'https://movies-explorer.yandex.nomoredomains.club',
   'https://movies-explorer-api-seven.vercel.app',
   'https://movies-explorer-frontend-six-ebon.vercel.app',
+  'https://api.nomoreparties.co/beatfilm-movies',
 ];
 
 const cors = (req, res, next) => {
