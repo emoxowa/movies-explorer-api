@@ -3,6 +3,7 @@ const allowedCors = [
   'http://localhost:3000',
   'https://movies-explorer.yandex.nomoredomains.club',
   'https://movies-explorer-api-seven.vercel.app/',
+  'movies-explorer-frontend-six-ebon.vercel.app'
 ];
 
 const cors = (req, res, next) => {
