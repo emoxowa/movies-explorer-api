@@ -6,19 +6,20 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 const auth = (req, res, next) => {
   const { authorization } = req.cookies;
+
   if (!authorization) {
-    throw new UnauthorizedError(authRequired);
+    return next(new UnauthorizedError(authRequired));
   }
-  const token = authorization.replace('Bearer ', '');
+
   let payload;
 
   try {
     payload = jwt.verify(
-      token,
+      authorization,
       NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
     );
   } catch (err) {
-    throw new UnauthorizedError(authRequired);
+    return next(new UnauthorizedError(authRequired));
   }
 
   req.user = payload;

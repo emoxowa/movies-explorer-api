@@ -1,6 +1,8 @@
 const allowedCors = [
   'https://localhost:3000',
   'http://localhost:3000',
+  'http://localhost',
+  'https://localhost',
   'https://movies-explorer.yandex.nomoredomains.club',
   'https://movies-explorer-api-seven.vercel.app',
   'https://movies-explorer-frontend-six-ebon.vercel.app',
@@ -16,11 +18,15 @@ const cors = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', true);
   }
+
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
+    if (requestHeaders) {
+      res.header('Access-Control-Allow-Headers', requestHeaders);
+    }
     return res.end();
   }
+
   return next();
 };
 
